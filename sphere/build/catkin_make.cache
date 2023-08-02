@@ -1,0 +1,2 @@
+sphere_pkg
+-DCATKIN_DEVEL_PREFIX=/home/junseo/ros_study/sphere/devel -DCMAKE_INSTALL_PREFIX=/home/junseo/ros_study/sphere/install -G Unix Makefiles
