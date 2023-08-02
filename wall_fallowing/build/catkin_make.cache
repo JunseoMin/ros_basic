@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/junseo/ros_study/wall_fallowing/devel -DCMAKE_INSTALL_PREFIX=/home/junseo/ros_study/wall_fallowing/install -G Unix Makefiles
