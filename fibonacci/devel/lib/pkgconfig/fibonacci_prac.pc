@@ -1,0 +1,8 @@
+prefix=/home/junseo/ros_study/fibonacci/devel
+
+Name: fibonacci_prac
+Description: Description of fibonacci_prac
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

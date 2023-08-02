@@ -1,0 +1,2 @@
+fibonacci_prac
+-DCATKIN_DEVEL_PREFIX=/home/junseo/ros_study/fibonacci/devel -DCMAKE_INSTALL_PREFIX=/home/junseo/ros_study/fibonacci/install -G Unix Makefiles
