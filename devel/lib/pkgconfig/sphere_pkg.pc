@@ -1,8 +1,0 @@
-prefix=/home/junseo/ros_study/sphere/devel
-
-Name: sphere_pkg
-Description: Description of sphere_pkg
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

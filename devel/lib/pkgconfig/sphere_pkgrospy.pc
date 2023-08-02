@@ -1,8 +1,0 @@
-prefix=/home/junseo/ros_study/sphere/devel
-
-Name: sphere_pkgrospy
-Description: Description of sphere_pkgrospy
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
