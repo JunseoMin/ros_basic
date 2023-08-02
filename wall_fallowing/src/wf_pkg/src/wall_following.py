@@ -12,7 +12,7 @@ class WallFallowing:
     def __init__(self) -> None:
         rospy.init_node('node',anonymous=True)
         self.cmd_pub=rospy.Publisher("/cmd_val",Twist,queue_size=10)
-        self.scan_sub = rospy.Subscriber('/limo/scan', LaserScan, self.laser_cb())
+        self.scan_sub = rospy.Subscriber('/limo/scan', LaserScan, self.laser_cb)
         self.a=0.0
         self.b=0.0
         self.error_i=0.0
@@ -23,7 +23,7 @@ class WallFallowing:
 
         cmd.linear.x=0.3
         cmd.angular.z=0
-        control+=self.slopeP()
+        control+=self.slope_p()
         control+=self.dQistanceI()
 
         if control>1:
@@ -47,7 +47,7 @@ class WallFallowing:
         y_vec=[]
         for i in range(len(scan.ranges)):
             if scan.ranges[i] != float('inf'):
-                angle_temp = scan.angle_min + i * scan.angle_increment
+                angle_tmp = scan.angle_min + i * scan.angle_increment
                 x_tmp = scan.ranges[i] * math.cos(angle_tmp)
                 y_tmp = scan.ranges[i] * math.sin(angle_tmp)
                 
@@ -78,7 +78,7 @@ class WallFallowing:
         P_control = Kp * error
         return P_control
     
-    def distance_i(self):
+    def dQistanceI(self):
         I_control = 0.0
         Ki = 0.1
         object_distance = 1.0
@@ -98,7 +98,7 @@ if __name__ == '__main__':
         wf = WallFallowing()
 
         while not rospy.is_shutdown():
-            wf.publish_cmd()
+            wf.publishCmd()
             r.sleep()
     except:
         pass
