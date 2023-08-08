@@ -1,0 +1,8 @@
+prefix=/home/junseo/ros_study/simulator/install
+
+Name: camera_packages
+Description: Description of camera_packages
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
