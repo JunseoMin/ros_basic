@@ -6,11 +6,11 @@ import numpy as np
 import cv2
 
 
-class Yellow_Line_Detect:
+class Binary_Line:
     def __init__(self):
         self.bridge = CvBridge()
-        rospy.init_node("yellow_line_node")
-        self.pub = rospy.Publisher("/yellow/compressed", CompressedImage, queue_size=10)
+        rospy.init_node("binary_line_node")
+        self.pub = rospy.Publisher("/binary/compressed", CompressedImage, queue_size=10)
         rospy.Subscriber(
             "/image_jpeg/compressed", CompressedImage, self.img_CB
         )
@@ -23,10 +23,20 @@ class Yellow_Line_Detect:
         yellow_lower = np.array([15, 80, 0])
         yellow_upper = np.array([45, 255, 255])
 
+        # Define range of blend color in HSV
+        white_lower = np.array([0, 0, 150])
+        white_upper = np.array([255, 10, 255])
+
         # Threshold the HSV image to get only yellow colors
         yellow_mask = cv2.inRange(hsv, yellow_lower, yellow_upper)
-        yellow_color = cv2.bitwise_and(img, img, mask=yellow_mask)
-        return yellow_color
+
+        # Threshold the HSV image to get only white colors
+        white_mask = cv2.inRange(hsv, white_lower, white_upper)
+
+        # Threshold the HSV image to get blend colors
+        blend_mask = cv2.bitwise_or(yellow_mask, white_mask)
+        blend_color = cv2.bitwise_and(img, img, mask=blend_mask)
+        return blend_color
 
     def img_warp(self, img):
         self.img_x, self.img_y = img.shape[1], img.shape[0]
@@ -61,22 +71,26 @@ class Yellow_Line_Detect:
         warp_img = cv2.warpPerspective(img, matrix, (self.img_x, self.img_y))
         return warp_img
 
+    def img_binary(self, blend_line):
+        bin = cv2.cvtColor(blend_line, cv2.COLOR_BGR2GRAY)
+        binary_line = np.zeros_like(bin)
+        binary_line[bin >127] = 255
+        return binary_line
+
     def img_CB(self, data):
         img = self.bridge.compressed_imgmsg_to_cv2(data)
         warp_img = self.img_warp(img)
-        yellow_line = self.detect_color(warp_img)
-        yellow_line_img_msg = self.bridge.cv2_to_compressed_imgmsg(yellow_line)
-        self.pub.publish(yellow_line_img_msg)
+        blend_img = self.detect_color(warp_img)
+        binary_img = self.img_binary(blend_img)
+        binary_line_img_msg = self.bridge.cv2_to_compressed_imgmsg(binary_img)
+        self.pub.publish(binary_line_img_msg)
         cv2.namedWindow("img", cv2.WINDOW_NORMAL)
-        cv2.namedWindow("yellow_line", cv2.WINDOW_NORMAL)
+        cv2.namedWindow("binary_img", cv2.WINDOW_NORMAL)
         cv2.imshow("img", img)
-        cv2.imshow("yellow_line", yellow_line)
+        cv2.imshow("binary_img", binary_img)
         cv2.waitKey(1)
 
 
 if __name__ == "__main__":
-    yellow_line_detect = Yellow_Line_Detect()
-    try:
-        rospy.spin()
-    except rospy.ROSInterruptException:
-        pass
+    binary_lines = Binary_Line()
+    rospy.spin()

@@ -160,6 +160,14 @@ include_directories(
 catkin_install_python(PROGRAMS
   scripts/camera_subs.py
   scripts/camera_pub.py
+  scripts/binary_line.pys
+  scripts/bird_eye_view.py
+  scripts/blend_line.py
+  scripts/LKAS.py
+  scripts/sliding_window.py
+  scripts/white_line_detect.py
+  scripts/yellow_line_detect.py
+  scripts/line_following.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
