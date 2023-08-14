@@ -158,16 +158,15 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  scripts/camera_subs.py
-  scripts/camera_pub.py
-  scripts/binary_line.pys
+  scripts/binary_line.py
   scripts/bird_eye_view.py
   scripts/blend_line.py
+  scripts/camera_pub.py
+  scripts/camera_subs.py
   scripts/LKAS.py
   scripts/sliding_window.py
   scripts/white_line_detect.py
   scripts/yellow_line_detect.py
-  scripts/line_following.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

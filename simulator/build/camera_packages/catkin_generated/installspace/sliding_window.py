@@ -6,22 +6,19 @@ import numpy as np
 import cv2
 import os
 import matplotlib.pyplot as plt
-from geometry_msgs.msg import Twist
 
 
-class LKAS:
+class Sliding_Window:
     def __init__(self):
         self.bridge = CvBridge()
-        rospy.init_node("meter_per_pixel_node", anonymous=True)
+        rospy.init_node("sliding_window_node")
         self.pub = rospy.Publisher(
-            "/cmd_vel", Twist, queue_size=10
+            "/sliding_windows/compressed", CompressedImage, queue_size=10
         )
         rospy.Subscriber(
             "/image_jpeg/compressed", CompressedImage, self.img_CB
         )
         self.nothing_flag = False
-        self.cmd = Twist()
-        self.cmd.angular.z=1.0
 
     def img_warp(self, img):
         self.img_x, self.img_y = img.shape[1], img.shape[0]
@@ -57,10 +54,6 @@ class LKAS:
         return warp_img
     
     def detect_color(self, img):
-        '''
-        set color range in HSV format colors
-        '''
-
         # Convert to HSV color space
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -72,12 +65,6 @@ class LKAS:
         white_lower = np.array([0, 0, 150])
         white_upper = np.array([255, 10, 255])
 
-
-
-        '''
-        get color in selected range in HSV
-        '''
-
         # Threshold the HSV image to get only yellow colors
         yellow_mask = cv2.inRange(hsv, yellow_lower, yellow_upper)
 
@@ -86,12 +73,7 @@ class LKAS:
 
         # Threshold the HSV image to get blend colors
         blend_mask = cv2.bitwise_or(yellow_mask, white_mask)
-        # blend == yellow area + white area
-
         blend_color = cv2.bitwise_and(img, img, mask=blend_mask)
-        # bit mask in mask area == blend == yellow area + white area
-
-
         return blend_color
 
     def img_warp(self, img):
@@ -130,37 +112,6 @@ class LKAS:
     def img_binary(self, blend_line):
         bin = cv2.cvtColor(blend_line, cv2.COLOR_BGR2GRAY)
         binary_line = np.zeros_like(bin)
-        '''
-        boolean indexing if [>] is true change index's scalar value
-        ex)
-        array([[100, 100, 100, 100],
-        [100, 100, 100, 100],
-        [  8,   9,  10,  11],
-        [ 12,  13,  14,  15],
-        [ 16,  17,  18,  19]])
-
-        In [18]: arr[arr >= 100] = 0
-        In [19]: arr
-        Out[19]:
-
-        array([[ 0,  0,  0,  0],
-                [ 0,  0,  0,  0],
-                [ 8,  9, 10, 11],
-                [12, 13, 14, 15],
-                [16, 17, 18, 19]])
-
-        In [20]: arr[(arr >= 8) & (arr <= 15)] = 10
-        In [21]: arr
-
-        Out[21]:
-
-        array([[ 0,  0,  0,  0],
-                [ 0,  0,  0,  0],
-                [10, 10, 10, 10],
-                [10, 10, 10, 10],
-                [16, 17, 18, 19]])
-
-        '''
         binary_line[bin > 127] = 1
         return binary_line
 
@@ -343,21 +294,6 @@ class LKAS:
             right_y,
         ) = self.window_search(binary_img)
 
-        # angular control
-        # (x axis of center axis - img x size // 2) * param(<- changeable)
-        power = [(center[0,0]-self.img_x//2)*0.1,
-                 (center[1,0]-self.img_x//2)*0.3,
-                 (center[2,0]-self.img_x//2)*1.5,
-                 (center[3,0]-self.img_x//2)*0.5,
-                 (center[4,0]-self.img_x//2)*0.5]
-
-        center_power = (power[0]+power[1]+power[2]+power[3]+power[4])/400
-        
-        self.cmd.linear.x = 0.6
-        self.cmd.angular.z =-center_power
-
-        self.pub.publish(self.cmd)
-
         os.system("clear")
         print(f"------------------------------")
         print(f"left : {left}")
@@ -367,8 +303,9 @@ class LKAS:
         print(f"left_y : {left_y}")
         print(f"right_x : {right_x}")
         print(f"right_y : {right_y}")
-        print(f"power : {center_power}")
         print(f"------------------------------")
+        sliding_window_msg = self.bridge.cv2_to_compressed_imgmsg(sliding_window_img)
+        self.pub.publish(sliding_window_msg)
         cv2.namedWindow("img", cv2.WINDOW_NORMAL)
         cv2.namedWindow("sliding_window_img", cv2.WINDOW_NORMAL)
         cv2.imshow("img", img)
@@ -377,5 +314,5 @@ class LKAS:
 
 
 if __name__ == "__main__":
-    sliding_window = LKAS()
+    sliding_window = Sliding_Window()
     rospy.spin()

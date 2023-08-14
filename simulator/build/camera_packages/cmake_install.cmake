@@ -53,10 +53,38 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/camera_subs.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/binary_line.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/bird_eye_view.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/blend_line.py")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/camera_pub.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/camera_subs.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/LKAS.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/sliding_window.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/white_line_detect.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera_packages" TYPE PROGRAM FILES "/home/junseo/ros_study/simulator/build/camera_packages/catkin_generated/installspace/yellow_line_detect.py")
 endif()
 
