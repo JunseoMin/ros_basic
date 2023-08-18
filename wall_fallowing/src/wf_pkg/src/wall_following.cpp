@@ -40,7 +40,7 @@ public:
         cmd.linear.x = 0.3;
         cmd.angular.z = 0;
         control += this->slopeP();
-        control += this->distanceI();
+        control += this->dQistanceI();
 
         if(control> 1)
         {

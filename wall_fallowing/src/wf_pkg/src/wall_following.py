@@ -33,6 +33,7 @@ class WallFallowing:
             cmd.linear.x=0.1
             cmd.angular.z=0.6
         else:
+            #exception : seems like not linear to linear
             cmd.linear.x=0.3-control*0.24
             cmd.angular.z=control*0.6
         
