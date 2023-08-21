@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/junseo/ros_study/ros_nav/devel -DCMAKE_INSTALL_PREFIX=/home/junseo/ros_study/ros_nav/install -G Unix Makefiles
