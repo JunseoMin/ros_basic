@@ -1,0 +1,2 @@
+application/kw:application/kw_gui:application/kw_msgs:save_n_following
+-DCATKIN_DEVEL_PREFIX=/home/junseo/ros_study/follow_ws/devel -DCMAKE_INSTALL_PREFIX=/home/junseo/ros_study/follow_ws/install -G Unix Makefiles

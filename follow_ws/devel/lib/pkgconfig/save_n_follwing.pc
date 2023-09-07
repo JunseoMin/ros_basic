@@ -1,0 +1,8 @@
+prefix=/home/junseo/ros_study/follow_ws/devel
+
+Name: save_n_follwing
+Description: Description of save_n_follwing
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
